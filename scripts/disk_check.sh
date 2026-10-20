@@ -1,3 +1,4 @@
+
 #!/bin/bash
 
 # Purpose: Display Linux filesystem disk usage
@@ -8,13 +9,22 @@ set -u
 echo "=================================="
 echo "       DISK USAGE REPORT"
 echo "=================================="
-echo "Hostname: $(hostname)"
+
+if ! hostname; then
+    echo "ERROR: Unable to retrieve hostname." >&2
+    exit 1
+fi
+
 echo "Date: $(date '+%Y-%m-%d %H:%M:%S')"
 echo
-
 echo "Filesystem disk usage:"
-df -kh
+
+if ! df -h; then
+    echo "ERROR: Unable to retrieve filesystem usage." >&2
+    exit 1
+fi
 
 echo
 echo "Disk usage check completed."
+exit 0
 
